@@ -15,13 +15,13 @@ PREDICTOR_FILE_NAME = "predictor.joblib"
 
 
 class Classifier:
-    """A wrapper class for the Random Forest binary classifier.
+    """A wrapper class for the Random Forest classifier.
 
     This class provides a consistent interface that can be used with other
     classifier models.
     """
 
-    model_name = "random_forest_binary_classifier"
+    model_name = "random_forest_classifier"
 
     def __init__(
         self,
@@ -30,7 +30,7 @@ class Classifier:
         min_samples_leaf: Optional[int] = 1,
         **kwargs,
     ):
-        """Construct a new Random Forest binary classifier.
+        """Construct a new Random Forest classifier.
 
         Args:
             n_estimators (int, optional): The number of trees in the forest.
@@ -49,7 +49,7 @@ class Classifier:
         self._is_trained = False
 
     def build_model(self) -> RandomForestClassifier:
-        """Build a new Random Forest binary classifier."""
+        """Build a new Random Forest classifier."""
         model = RandomForestClassifier(
             n_estimators=self.n_estimators,
             min_samples_split=self.min_samples_split,
@@ -59,7 +59,7 @@ class Classifier:
         return model
 
     def fit(self, train_inputs: pd.DataFrame, train_targets: pd.Series) -> None:
-        """Fit the Random Forest binary classifier to the training data.
+        """Fit the Random Forest classifier to the training data.
 
         Args:
             train_inputs (pandas.DataFrame): The features of the training data.
@@ -89,20 +89,20 @@ class Classifier:
         return self.model.predict_proba(inputs)
 
     def evaluate(self, test_inputs: pd.DataFrame, test_targets: pd.Series) -> float:
-        """Evaluate the Random Forest binary classifier and return the accuracy.
+        """Evaluate the Random Forest classifier and return the accuracy.
 
         Args:
             test_inputs (pandas.DataFrame): The features of the test data.
             test_targets (pandas.Series): The labels of the test data.
         Returns:
-            float: The accuracy of the Random Forest binary classifier.
+            float: The accuracy of the Random Forest classifier.
         """
         if self.model is not None:
             return self.model.score(test_inputs, test_targets)
         raise NotFittedError("Model is not fitted yet.")
 
     def save(self, model_dir_path: str) -> None:
-        """Save the Random Forest binary classifier to disk.
+        """Save the Random Forest classifier to disk.
 
         Args:
             model_dir_path (str): Dir path to which to save the model.
@@ -113,12 +113,12 @@ class Classifier:
 
     @classmethod
     def load(cls, model_dir_path: str) -> "Classifier":
-        """Load the Random Forest binary classifier from disk.
+        """Load the Random Forest classifier from disk.
 
         Args:
             model_dir_path (str): Dir path to the saved model.
         Returns:
-            Classifier: A new instance of the loaded Random Forest binary classifier.
+            Classifier: A new instance of the loaded Random Forest classifier.
         """
         model = joblib.load(os.path.join(model_dir_path, PREDICTOR_FILE_NAME))
         return model
