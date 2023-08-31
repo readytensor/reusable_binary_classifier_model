@@ -148,7 +148,7 @@ def run_training(
                 hyperparameters=tuned_hyperparameters,
             )
         else:
-            # uses default hyperparameters to train model
+            # use default hyperparameters to train model
             logger.info("Training classifier...")
             default_hyperparameters = read_json_as_dict(
                 default_hyperparameters_file_path
